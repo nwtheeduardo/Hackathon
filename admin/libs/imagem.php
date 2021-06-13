@@ -94,6 +94,7 @@
 
 			$imagem_gerada = $pastaFotos.$nome."g.jpg";
 			$path = $imagem;
+			//echo "<p>$../$path</p>";
 			$imagem_orig = ImageCreateFromJPEG($path);
 			$pontoX = ImagesX($imagem_orig);
 			$pontoY = ImagesY($imagem_orig);

@@ -3,9 +3,9 @@
 	//criar uma conexao com um banco - PDO
 	//constante
 	define('SERVER', 'localhost');
-	define('BANCO', 'sistemas');
+	define('BANCO', 'hackathon');
 	define('USUARIO', 'root');
-	define('SENHA', '');
+	define('SENHA', 'pechebelok');
 
 	try {
 		//tentar realizar a conexão

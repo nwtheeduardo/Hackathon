@@ -10,7 +10,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 	
-                <img src="images/logo.png" alt="Sub Sub Marino">
+                <p>ModelFlesh</p>
 
             </a>
 
@@ -37,95 +37,15 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <?php
-                            include "libs/docs.php";
-
-                            $sql = "select * from menu where submenu = 'C' 
-                                order by nome";
-                            $consulta = $pdo->prepare($sql);
-                            $consulta->execute();
-
-                            while ( $dados = $consulta->fetch(PDO::FETCH_OBJ) ) {
-
-                                $acesso = acesso($pdo, $dados->tabela);
-                                if ( $acesso == "S" ) {
-                                ?>
-                                <a class="collapse-item" href="<?=$dados->url?>"><i class="<?=$dados->icone?>"></i> <?=$dados->nome?></a>
-                                <?php
-                                }
-
-                            }
-                        ?>
+                        <a class="collapse-item" href="cadastros/marcas"><i class="fas fa-bolt"></i> Marcas</a>
+                        <a class="collapse-item" href="cadastros/veiculos"><i class="fas fa-car"></i>Veículos</a>
+                        <a class="collapse-item" href="cadastros/cores"><i class="fas fa-tint"></i> Cores</a>
+                        <a class="collapse-item" href="cadastros/usuarios"><i class="fas fa-users"></i> Usuário</a>
                     </div>
                 </div>
             </li>
-
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-shopping-cart"></i>
-                    <span>Processos</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <?php
- 
-                            $sql = "select * from menu where submenu = 'P' 
-                                order by nome";
-                            $consulta = $pdo->prepare($sql);
-                            $consulta->execute();
-
-                            while ( $dados = $consulta->fetch(PDO::FETCH_OBJ) ) {
-
-                                $acesso = acesso($pdo, $dados->tabela);
-                                if ( $acesso == "S" ) {
-                                ?>
-                                <a class="collapse-item" href="<?=$dados->url?>"><i class="<?=$dados->icone?>"></i> <?=$dados->nome?></a>
-                                <?php
-                                }
-
-                            }
-                        ?>
-                    </div>
-                </div>
-            </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
-
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Relatórios</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <?php
-
-                            $sql = "select * from menu where submenu = 'R' 
-                                order by nome";
-                            $consulta = $pdo->prepare($sql);
-                            $consulta->execute();
-
-                            while ( $dados = $consulta->fetch(PDO::FETCH_OBJ) ) {
-
-                                $acesso = acesso($pdo, $dados->tabela);
-                                if ( $acesso == "S" ) {
-                                ?>
-                                <a class="collapse-item" href="<?=$dados->url?>"><i class="<?=$dados->icone?>"></i> <?=$dados->nome?></a>
-                                <?php
-                                }
-
-                            }
-                        ?>
-                    </div>
-                </div>
-            </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
@@ -179,20 +99,13 @@
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                 	<?=$_SESSION['submarino']['nome']?>
                                 </span>
-                                <img class="img-profile rounded-circle"
-                                    src="<?="../arquivos/".$_SESSION['submarino']['foto']."p.jpg"?>">
+                                <!-- <img class="img-profile rounded-circle"
+                                    src="<?="../arquivos/".$_SESSION['submarino']['foto']."p.jpg"?>"> -->
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Seus Dados
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Mudar Senha
-                                </a>
+
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="sair.php">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

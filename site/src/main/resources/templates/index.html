@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="header :: head">
+  <meta charset="utf-8">
+</head>
+
+<body>
+  <ion-header>
+    <ion-toolbar color="primary">
+
+      <ion-title>ModelFlesh</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-row>
+    <ion-col size="6">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Nossa linha de veículos novos</ion-card-subtitle>
+          <ion-card-title>Veículos Novos</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          Keep close to Nature's heart... and break clear away, once in awhile,
+          and climb a mountain or spend a week in the woods. Wash your spirit clean.
+        </ion-card-content>
+      </ion-card>
+
+    </ion-col>
+    <ion-col size="6">
+      <ion-card>
+        <img src="./madison.jpg" />
+        <ion-card-header>
+          <ion-card-subtitle>Card</ion-card-subtitle>
+          <ion-card-title>Veículos Seminovos</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          Keep close to Nature's heart... and break clear away, once in awhile,
+          and climb a mountain or spend a week in the woods. Wash your spirit clean.
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    
+        <ion-col size="6" th:each="v : ${veiculos}">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle th:text="${v.anomodelo}"></ion-card-subtitle>
+          <ion-card-title th:text="${v.modelo}"></ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          Keep close to Nature's heart... and break clear away, once in awhile,
+          and climb a mountain or spend a week in the woods. Wash your spirit clean.
+        </ion-card-content>
+      </ion-card>
+
+    </ion-col>
+    <ion-col size="6">
+      <ion-card >
+        <img src="./madison.jpg" />
+        <ion-card-header>
+          <ion-card-subtitle>Card</ion-card-subtitle>
+          <ion-card-title>Veículos Seminovos</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          Keep close to Nature's heart... and break clear away, once in awhile,
+          and climb a mountain or spend a week in the woods. Wash your spirit clean.
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+  </ion-row>
+
+
+</body>
+
+</html>

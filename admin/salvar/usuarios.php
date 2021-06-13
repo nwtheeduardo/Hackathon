@@ -1,103 +1,90 @@
 <?php
-	//verificar se está logado
-    if ( ! isset ( $_SESSION['submarino']['id'] ) ) exit;
+include "libs/docs.php";
 
-    //verificar se foi dado um post
-    if ( $_POST ) {
+//verificar se está logado
+if (!isset($_SESSION['submarino']['id'])) exit;
 
-    	//recuperar os dados
-    	foreach ($_POST as $key => $value) {
-    		$$key = trim ( $value );
-    	}
+//verificar se foi dado um post
+if ($_POST) {
+	//recuperar os dados
+	foreach ($_POST as $key => $value) {
+		$$key = trim($value);
+	}
 
-    	//validar os campos
-    	if ( empty ( $login ) ) {
-    		mensagem("Erro","Preencha o login","error");
-    		exit;
-    	} else if ( $senha != $redigite ) {
-    		mensagem("Erro","As senhas digitadas não são iguais","error");
-    		exit;
-    	}
+	//validar os campos
+	if (empty($login)) {
+		mensagem("Erro", "Preencha o login", "error");
+		exit;
+	} else if ($senha != $redigite) {
+		mensagem("Erro", "As senhas digitadas não são iguais", "error");
+		exit;
+	}
 
-    	//copiar o arquivo de foto, se existir
-    	if ( !empty ( $_FILES["foto"]["name"] ) ) {
+	$sql = $consulta = $dados = NULL;
 
-    		//copiar p o servidor
-    		if ( !move_uploaded_file($_FILES["foto"]["tmp_name"], "../arquivos/".$_FILES["foto"]["name"] ) ) {
+	$sql = "select id from usuario where login = :login limit 1";
+	$consulta = $pdo->prepare($sql);
+	$consulta->bindParam(":login", $login);
+	$consulta->execute();
 
-    			mensagem("Erro","Não foi possível copiar a foto","error");
-    			exit;
+	$dados = $consulta->fetch(PDO::FETCH_OBJ);
 
-    		}
+	/// Se tiver um usuário com o mesmo login
+	//se for update 
 
-    		//dar um novo nome ao arquivo
-    		$foto = time()."_".$_SESSION["submarino"]["id"];
+	if (!empty($dados->id) && ($id != $dados->id)){
+		mensagem("Erro", "Usuário já cadastrado com esse login, favor colocar um novo", "error");
+		exit;
+	}
 
-    		include "libs/imagem.php";
+	$sql = $consulta = $dados = NULL;
 
-    		loadImg("../arquivos/".$_FILES["foto"]["name"], $foto, "../arquivos/");
+	//verificar se é insert ou update
+	if (empty($id)) {
+		//insert
+		//criptografar a senh
 
-    	}
+		$senha = password_hash($senha, PASSWORD_DEFAULT);
+		$sql = "insert into usuario values(NULL, :nome, :login, :senha)";
+		$consulta = $pdo->prepare($sql);
+		$consulta->bindParam(":nome", $nome);
+		$consulta->bindParam(":login", $login);
+		$consulta->bindParam(":senha", $senha);
+	} else {
 
-    	//verificar se é insert ou update
-    	if ( empty ( $id ) ) {
-    		//insert
-    		//criptografar a senha
-    		$senha = password_hash($senha, PASSWORD_DEFAULT);
-    		$sql = "insert into usuario values(NULL, :nome, :email, :login, :senha, :foto, :tipo_id, :ativo)";
-    		$consulta = $pdo->prepare($sql);
-    		$consulta->bindParam(":nome", $nome);
-    		$consulta->bindParam(":email", $email);
-    		$consulta->bindParam(":login", $login);
-    		$consulta->bindParam(":senha", $senha);
-    		$consulta->bindParam(":foto", $foto);
-    		$consulta->bindParam(":tipo_id", $tipo_id);
-    		$consulta->bindParam(":ativo", $ativo);
-    	} else {
+		//s de senha com null
+		$f = $s = NULL;
 
-    		//s de senha com null
-    		$f = $s = NULL;
+		//verificar se existe senha
+		if (!empty($senha)) {
+			//criptografar a senha
+			$senha = password_hash($senha, PASSWORD_DEFAULT);
+			$s = ", senha = :senha ";
+		}
 
-    		//verificar se existe senha
-    		if ( !empty ( $senha ) ) {
-    			//criptografar a senha
-    			$senha = password_hash($senha, PASSWORD_DEFAULT);
-    			$s = ", senha = :senha ";
-    		}
-    		if ( !empty ( $foto ) ) {
-    			$f = ", foto = :foto ";
-    		}
-
-    		$sql = "update usuario set 
-    			nome = :nome, email = :email, 
-    			tipo_id = :tipo_id, ativo = :ativo 
+		$sql = "update usuario set 
+    			nome = :nome
     			$f 
     			$s
     			where id = :id limit 1";
-    		$consulta = $pdo->prepare($sql);
-    		$consulta->bindParam(":nome", $nome);
-    		$consulta->bindParam(":email", $email);
-    		$consulta->bindParam(":tipo_id", $tipo_id);
-    		$consulta->bindParam(":ativo", $ativo);
-    		$consulta->bindParam(":id", $id);
+		$consulta = $pdo->prepare($sql);
+		$consulta->bindParam(":nome", $nome);
+		$consulta->bindParam(":id", $id);
 
-    		if ( !empty( $s ) ) {
-    			$consulta->bindParam(":senha", $senha);
-    		}
-    		if ( !empty( $f ) ) {
-    			$consulta->bindParam(":foto", $foto);
-    		}
-    	}
+		if (!empty($s)) {
+			$consulta->bindParam(":senha", $senha);
+		}
+	}
 
-    	//executar o insert ou update
-    	if ( $consulta->execute() ) {
-    		mensagem("Salvo","Registro salvo com sucesso","ok");
-    		exit;
-    	}
+	//executar o insert ou update
+	if ($consulta->execute()) {
+		mensagem("Salvo", "Registro salvo com sucesso", "ok");
+		exit;
+	}
 
-    	mensagem("Erro","Erro ao salvar","error");
-    	exit;
-    }
+	mensagem("Erro", "Erro ao salvar", "error");
+	exit;
+}
 
-    //se tentar acessar sem passar pelo form
-    mensagem("Erro","Requisição inválida","error");
+//se tentar acessar sem passar pelo form
+mensagem("Erro", "Requisição inválida", "error");

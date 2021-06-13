@@ -76,7 +76,6 @@
 	************************************* */
 
 	function mensagem($titulo, $mensagem, $icone) {
-
 		?>
         <script>
             //mostrar a telinha animada - alert
@@ -117,44 +116,3 @@
 		return number_format($valor, 2, ",", ".");
 		//$valor - casas decimais - separador de decimais - separador de milhares
 	}
-
-
-	/***************************************
-	* Função para pesquisar o acesso
-	* $pdo - conexão com o banco
-	* $arquivo / tabela que irá verificar
-	*************************************** */
-	function acesso($pdo, $arquivo) {
-		$tipo_id = $_SESSION["submarino"]["tipo_id"];
-
-        $sql = "select acesso from acesso where tabela = :arquivo AND 
-            tipo_id = :tipo_id limit 1";
-        $consulta = $pdo->prepare($sql);
-        $consulta->bindParam(":arquivo", $arquivo);
-        $consulta->bindParam(":tipo_id", $tipo_id);
-        $consulta->execute();
-        $dados = $consulta->fetch(PDO::FETCH_OBJ);
-
-        return $acesso = $dados->acesso ?? "N";
-	}
-
-
-	/***************************************
-	* Pegar o total da venda
-	************************************** */
-	function getTotal($pdo, $venda_id) {
-
-		$sql = "select sum(valor * quantidade) total 
-		from venda_produto
-		where venda_id = :venda_id limit 1";
-		$consulta = $pdo->prepare($sql);
-		$consulta->bindParam(":venda_id", $venda_id);
-		$consulta->execute();
-
-		$total = $consulta->fetch(PDO::FETCH_OBJ)->total;
-
-		//$dados = $consulta->fetch(PDO::FETCH_OBJ);
-		//$total = $dados->total;
-
-		return number_format($total,2,",",".");
-	} 

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="header :: head">
+	<meta charset="utf-8">
+</head>
+<body>
+	<div class="container">
+		<img th:src="@{/images_upload/default.jpg}" height="100" width="100"
+			class="img-responsive pull-right">
+		<h1>Hackathon</h1>
+
+		<form action="logar" method="post" class="form-inline">
+			<div class="form-group mb-2">
+				<input type="text" class="form-control" placeholder="Login"
+					id="login" name="login" />
+			</div>
+			<div class="form-group mx-sm-3 mb-2">
+				<input type="password" class="form-control" placeholder="Senha"
+					id="senha" name="senha" />
+			</div>
+			<button type="submit" class="btn btn-success">Logar</button>
+		</form>
+		
+		<div th:include="footer :: copy"></div>
+	</div>
+</body>
+</html>

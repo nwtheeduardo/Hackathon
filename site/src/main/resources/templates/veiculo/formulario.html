@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:include="header :: head">
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div class="container">
+			<img th:src="@{/images_upload/default.jpg}" height="100" width="100"
+				class="img-responsive pull-right">
+			<h1>Cadastro de Veiculos</h1>
+			<div class="form-group">
+				<a href="/"><h3>voltar</h3></a>
+			</div>
+
+			<!-- É necessário indicar o enctype -->
+			<form action="salvar" method="post" enctype="multipart/form-data">
+				<div class="form-group">
+					<br>
+					<label>Modelo</label>
+					<input type="text" class="form-control" id="modelo" name="modelo" th:value="${veiculo.modelo}"/>
+					
+					<!-- O forma da data vem yyy-mm-dd por isso o uso do sbstring -->
+					<br>
+					<label>Ano Modelo</label>
+					<input type="text" class="form-control"
+						id="anoModelo" name="anoModelo"
+						min="4" max="4"
+						th:value="${#strings.substring(veiculo.anoModelo,0,4)}"/> 
+					
+					<!-- Exemplo de dropdown-list/select -->
+					<br>
+					<label>Marca</label>
+					<select th:field="${veiculo.marca.id}" class="form-control">
+						<option value="" selected="selected">Selecione...</option>
+						<option th:each="m: ${marcas}" th:value="${m.id}" th:text="${m.descricao}"></option>
+					</select>
+
+
+					<!-- Input para fazer upload de arquivos -->
+					<br>
+					<label>Foto Destaque</label>
+					<input placeholder="IMAGEM" type="file" class="form-control" id="imagemFile" name="imagemFile">
+															
+					<br>
+					<input type="hidden" id="id" name="id" th:value="${veiculo.id}" th:if="${veiculo != null}">
+				</div>
+				<button type="submit" class="btn btn-primary">Salvar</button>
+			</form>
+
+		<div th:include="footer :: copy"></div>
+	</div>
+	</body>
+</html>
