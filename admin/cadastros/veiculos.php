@@ -1,7 +1,7 @@
 <?php
 if (!isset($_SESSION['submarino']['id'])) exit;
 
-$modelo = $opcionais = $valor = $anomodelo = $anofabricacao = $fotoDestaque = $tipo = $marca_id = $cor_id = NULL;
+$modelo = $opcionais = $valor = $anomodelo = $anofabricacao = $fotodestaque = $tipo = $marca_id = $cor_id = NULL;
 
 include "libs/docs.php";
 
@@ -25,7 +25,7 @@ if (!empty($id)) {
 	$valor = formatarValorBR($dados->valor);
 	$anomodelo = $dados->anomodelo;
 	$anofabricacao = $dados->anofabricacao;
-	$fotoDestaque = $dados->fotoDestaque;
+	$fotodestaque = $dados->fotodestaque;
 	$tipo = $dados->tipo;
 	$marca_id = $dados->marca_id;
 	$cor_id = $dados->cor_id;
@@ -78,18 +78,18 @@ if (!empty($id)) {
 					$required = ' required data-parsley-required-message="Selecione um arquivo" ';
 					$link = NULL;
 
-					//verificar se a fotoDestaque não esta em branco
-					if (!empty($fotoDestaque)) {
-						//caminho para a fotoDestaque
-						$img = "../veiculos/{$fotoDestaque}m.jpg";
-						//criar um link para abrir a fotoDestaque
-						$link = "<a href='{$img}' data-lightbox='foto' class='badge badge-success'>Abrir fotoDestaque</a>";
+					//verificar se a fotodestaque não esta em branco
+					if (!empty($fotodestaque)) {
+						//caminho para a fotodestaque
+						$img = "../veiculos/{$fotodestaque}m.jpg";
+						//criar um link para abrir a fotodestaque
+						$link = "<a href='{$img}' data-lightbox='foto' class='badge badge-success'>Abrir fotodestaque</a>";
 						$required = NULL;
 					}
 
 					?>
-					<label for="fotoDestaque">Foto Destaque (JPG)* <?= $link ?>:</label>
-					<input type="file" name="fotoDestaque" id="fotoDestaque" class="form-control" <?= $required ?> accept="image/jpeg">
+					<label for="fotodestaque">Foto Destaque (JPG)* <?= $link ?>:</label>
+					<input type="file" name="fotodestaque" id="fotodestaque" class="form-control" <?= $required ?> accept="image/jpeg">
 				</div>
 
 				<div class="col-12 col-md-12">

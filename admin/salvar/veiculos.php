@@ -37,14 +37,14 @@ if ($_POST) {
 
     $valor = formatarValor($valor);
 
-    //programação para copiar uma fotoDestaque
+    //programação para copiar uma fotodestaque
     //no insert envio da foto é obrigatório
-    //no update só se for selecionada uma nova fotoDestaque
+    //no update só se for selecionada uma nova fotodestaque
 
     //print_r ( $_FILES );
 
-    //se o id estiver em branco e o fotoDestaque tbém - erro
-    if ((empty($id)) and (empty($_FILES['fotoDestaque']['name']))) {
+    //se o id estiver em branco e o fotodestaque tbém - erro
+    if ((empty($id)) and (empty($_FILES['fotodestaque']['name']))) {
         mensagem(
             "Erro ao enviar foto de destaque",
             "Selecione um arquivo JPG válido",
@@ -54,21 +54,21 @@ if ($_POST) {
 
     $usuario = $_SESSION['submarino']['id'];
 
-    //se existir fotoDestaque - copia para o servidor
-    if (!empty($_FILES['fotoDestaque']['name'])) {
+    //se existir fotodestaque - copia para o servidor
+    if (!empty($_FILES['fotodestaque']['name'])) {
         //calculo para saber quantos mb tem o arquivo
-        $tamanho = $_FILES['fotoDestaque']['size'];
+        $tamanho = $_FILES['fotodestaque']['size'];
         $t = 8 * 1024 * 1024; //byte - kbyte - megabyte
 
-        $fotoDestaque = time();
+        $fotodestaque = time();
 
-        //definir um nome para a fotoDestaque
-        $fotoDestaque = "veiculo_{$fotoDestaque}_{$usuario}";
+        //definir um nome para a fotodestaque
+        $fotodestaque = "veiculo_{$fotodestaque}_{$usuario}";
 
-        //echo "<p>{$fotoDestaque}</p>"; exit;
+        //echo "<p>{$fotodestaque}</p>"; exit;
 
         //validar se é jpg
-        if (empty($fotoDestaque)){
+        if (empty($fotodestaque)){
             mensagem(
                 "OK",
                 "Registro salvo/alterado com sucesso!",
@@ -76,7 +76,7 @@ if ($_POST) {
             );
 
         }
-        if ($_FILES['fotoDestaque']['type'] != 'image/jpeg') {
+        if ($_FILES['fotodestaque']['type'] != 'image/jpeg') {
             mensagem(
                 "Erro ao enviar Foto",
                 "O arquivo enviado não é um JPG válido, selecione um arquivo JPG",
@@ -88,7 +88,7 @@ if ($_POST) {
                 "O arquivo é muito grande e não pode ser enviado. Tente arquivos menores que 8 MB",
                 "error"
             );
-        } else if (!copy($_FILES['fotoDestaque']['tmp_name'], '../veiculos/' . $_FILES['fotoDestaque']['name'])) {
+        } else if (!copy($_FILES['fotodestaque']['tmp_name'], '../veiculos/' . $_FILES['fotodestaque']['name'])) {
             mensagem(
                 "Erro ao enviar Foto",
                 "Não foi possível copiar o arquivo para o servidor",
@@ -96,18 +96,18 @@ if ($_POST) {
             );
         }
 
-        //redimensionar a fotoDestaque
+        //redimensionar a fotodestaque
         $pastaFotos = '../veiculos/';
         loadImg(
-            $pastaFotos . $_FILES['fotoDestaque']['name'],
-            $fotoDestaque,
+            $pastaFotos . $_FILES['fotodestaque']['name'],
+            $fotodestaque,
             $pastaFotos
         );
     } //fim da verificação da foto
     //se vai dar insert ou update
     if (empty($id)) {
 
-        $sql = "insert into veiculo(id, modelo, usuario_id, opcionais, valor, anomodelo, anofabricacao, fotoDestaque, tipo, cor_id, marca_id) values( NULL, :modelo, :usuario_id, :opcionais, :valor, :anomodelo, :anofabricacao, :fotoDestaque, :tipo, :cor_id, :marca_id)";
+        $sql = "insert into veiculo(id, modelo, usuario_id, opcionais, valor, anomodelo, anofabricacao, fotodestaque, tipo, cor_id, marca_id) values( NULL, :modelo, :usuario_id, :opcionais, :valor, :anomodelo, :anofabricacao, :fotodestaque, :tipo, :cor_id, :marca_id)";
         $consulta = $pdo->prepare($sql);
 
         $consulta->bindParam(':modelo', $modelo);
@@ -116,11 +116,11 @@ if ($_POST) {
         $consulta->bindParam(':valor', $valor);
         $consulta->bindParam(':anomodelo', $anomodelo);
         $consulta->bindParam(':anofabricacao', $anofabricacao);
-        $consulta->bindParam(':fotoDestaque', $fotoDestaque);
+        $consulta->bindParam(':fotodestaque', $fotodestaque);
         $consulta->bindParam(':tipo', $tipo);
         $consulta->bindParam(':cor_id', $cor_id);
         $consulta->bindParam(':marca_id', $marca_id);
-    } else if (empty($fotoDestaque)) {
+    } else if (empty($fotodestaque)) {
 
         $sql = "update veiculo set modelo = :modelo, usuario_id = :usuario_id, opcionais = :opcionais, valor = :valor, 
                                        anomodelo = :anomodelo, anofabricacao = :anofabricacao, tipo = :tipo, 
@@ -141,7 +141,7 @@ if ($_POST) {
 
         $sql = "update veiculo set modelo = :modelo, usuario_id = :usuario_id, opcionais = :opcionais, valor = :valor, 
                                        anomodelo = :anomodelo, anofabricacao = :anofabricacao,
-                                       fotoDestaque = :fotoDestaque, tipo = :tipo, cor_id = :cor_id, marca_id = :marca_id
+                                       fotodestaque = :fotodestaque, tipo = :tipo, cor_id = :cor_id, marca_id = :marca_id
                     where id = :id limit 1";
         $consulta = $pdo->prepare($sql);
         $consulta->bindParam(':modelo', $modelo);
@@ -150,7 +150,7 @@ if ($_POST) {
         $consulta->bindParam(':valor', $valor);
         $consulta->bindParam(':anomodelo', $anomodelo);
         $consulta->bindParam(':anofabricacao', $anofabricacao);
-        $consulta->bindParam(':fotoDestaque', $fotoDestaque);
+        $consulta->bindParam(':fotodestaque', $fotodestaque);
         $consulta->bindParam(':tipo', $tipo);
         $consulta->bindParam(':cor_id', $cor_id);
         $consulta->bindParam(':marca_id', $marca_id);

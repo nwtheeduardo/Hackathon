@@ -32,7 +32,7 @@
             <tbody>
                 <?php
 
-                    $sql = "select v.id, v.modelo, v.valor, v.anoFabricacao, v.anomodelo, v.fotoDestaque, c.cor, m.marca
+                    $sql = "select v.id, v.modelo, v.valor, v.anoFabricacao, v.anomodelo, v.fotodestaque, c.cor, m.marca
                         from veiculo v, cor c, marca m
                         where v.marca_id = m.id
                           and c.id = v.cor_id
@@ -44,8 +44,8 @@
 
                         $valor  = number_format( $dados->valor,2, ',' , '.' );
                         
-                        $fotoDestaque= "../veiculos/{$dados->fotoDestaque}p.jpg"; 
-                        $imagemg = "../veiculos/{$dados->fotoDestaque}g.jpg";
+                        $fotodestaque= "../veiculos/{$dados->fotodestaque}p.jpg"; 
+                        $imagemg = "../veiculos/{$dados->fotodestaque}g.jpg";
 
                         ?>
                         <tr>
@@ -56,7 +56,7 @@
                             <td><?=$valor?></td>
                             <td>
                                 <a href="<?=$imagemg?>" data-lightbox="foto" title="<?=$dados->modelo?>">
-                                    <img src="<?=$fotoDestaque?>" alt="<?=$dados->modelo?>" width="100px">
+                                    <img src="<?=$fotodestaque?>" alt="<?=$dados->modelo?>" width="100px">
                                 </a>
                             </td>
                             <td>
